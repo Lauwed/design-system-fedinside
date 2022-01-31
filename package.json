@@ -2,6 +2,14 @@
   "name": "design-system-fedinside",
   "version": "0.1.0",
   "private": true,
+  "main": "./lib/main.js",
+  "module": "./lib/main.js",
+  "files": ["lib"],
+  "author": "Laura Durieux @ Business Inside Software",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lauwed/design-system-fedinside.git"
+  },
   "dependencies": {
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
@@ -13,14 +21,29 @@
   },
   "scripts": {
     "start": "react-scripts start",
-    "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "release": "standard-version && npm publish",
+    "build": "tsc -p tsconfig.json && yarn copy-files",
+    "copy-files": "copyfiles -u 1 \"src/**/*.css\" \"src/**/*.svg\" \"src/**/*.json\" lib/",
+    "storybook": "start-storybook -p 6006",
+    "build-storybook": "build-storybook",
+    "prebuild": "rimraf lib"
   },
   "eslintConfig": {
     "extends": [
       "react-app",
       "react-app/jest"
+    ],
+    "overrides": [
+      {
+        "files": [
+          "**/*.stories.*"
+        ],
+        "rules": {
+          "import/no-anonymous-default-export": "off"
+        }
+      }
     ]
   },
   "browserslist": {
@@ -34,5 +57,18 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
+  },
+  "devDependencies": {
+    "@storybook/addon-actions": "^6.4.17",
+    "@storybook/addon-essentials": "^6.4.17",
+    "@storybook/addon-links": "^6.4.17",
+    "@storybook/builder-webpack5": "^6.4.17",
+    "@storybook/manager-webpack5": "^6.4.17",
+    "@storybook/node-logger": "^6.4.17",
+    "@storybook/preset-create-react-app": "^4.0.0",
+    "@storybook/react": "^6.4.17",
+    "copyfiles": "^2.4.1",
+    "rimraf": "^3.0.2",
+    "webpack": "^5.67.0"
   }
 }
